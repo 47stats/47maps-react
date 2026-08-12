@@ -1,0 +1,104 @@
+html {
+  font-size: 14px;
+}
+.prose {
+  font-size: 12px;
+}
+
+.mapboxgl-ctrl-geocoder {
+  border-radius: 20px;
+}
+.mapboxgl-ctrl-geocoder--icon {
+  top: 5px;
+}
+.mapboxgl-ctrl-geocoder--input {
+  padding-left: 35px !important;
+}
+input[type="text"].mapboxgl-ctrl-geocoder--input {
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  border: 1px solid #2d9fd9;
+  color: #a0d18c;
+  /*width: 250px; */
+  height: 30px;
+  padding-left: 10px;
+}
+input[type="text"]:focus.mapboxgl-ctrl-geocoder--input {
+  outline: none;
+  border: 1px solid #a0d18c;
+  color: #2d9fd9;
+}
+.mapboxgl-ctrl-geocoder .mapboxgl-ctrl-geocoder--pin-right > * {
+  top: 5px !important;
+}
+/*
+button svg {
+    display: inline !important;
+}
+*/
+.tooltip {
+  position: absolute;
+  margin: 8px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 10px;
+  z-index: 9;
+  pointer-events: none;
+}
+.mapboxgl-popup-close-button {
+  color: #999;
+  font-size: xx-large;
+}
+
+/* Spinner中央配置用のスタイル */
+.spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.spinner-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  cursor: pointer;
+  _background-color: rgba(229, 231, 235, var(--bg-opacity));
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+  _background: red;
+}
+::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: #a0aec0;
+  _outline: 1px solid slategrey;
+}
+/*
+@media (prefers-color-scheme: dark) {
+  .mapboxgl-popup-content {
+    --tw-bg-opacity: 1;
+    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  }
+  .mapboxgl-popup-tip {
+    --tw-bg-opacity: 1;
+    border-top-color: rgb(55 65 81 / var(--tw-bg-opacity)) !important;
+  }
+  .mapboxgl-popup-close-button {
+    color:#fff;
+  }
+}
+*/

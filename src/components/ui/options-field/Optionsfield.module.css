@@ -1,0 +1,70 @@
+.toggle_container {
+  max-width: 100%;
+}
+.toggle_container > input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+.toggle {
+  flex-shrink: 0;
+  cursor: pointer;
+  color: #757d82;
+  font-size: 12px;
+  padding: 3px 18px;
+  border-radius: 15px;
+  background-color: transparent;
+  transition:
+    color 0.125s,
+    background-color 0.125s;
+}
+.toggle_label {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+
+  padding-top: 3px !important;
+  padding-bottom: 3px !important;
+}
+.toggle_group {
+  display: inline-flex;
+  text-align: center;
+  border-radius: 18px;
+
+  position: absolute !important;
+  /*
+    top: 0!important;
+    left: 0!important;
+  margin-top: 12px !important;
+  margin-left: 12px !important;
+    */
+
+  border-style: solid;
+  border-width: 1px;
+  border-width: 2px !important;
+  border-color: #fff !important;
+
+  /*
+    background-color: #fff!important;
+    */
+  z-index: 1 !important;
+}
+input:checked + .toggle--active-white {
+  color: #fff;
+}
+input:checked + .toggle {
+  background: #757d82;
+  color: #fff;
+}
+.shadow_darken10,
+.shadow_darken10-on-active.is-active,
+.shadow_darken10-on-active.is-active:hover,
+.shadow-darken10-on-hover:hover {
+  box-shadow: 0 2px 10px 0 rgba(26, 34, 36, 0.1) !important;
+}

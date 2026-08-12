@@ -1,0 +1,42 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Build and tool caches
+.vite/
+.flowbite-react/
+.eslintcache
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+coverage/
+.cache/
+.parcel-cache/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+.env
+.env*
+!.env.example
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.tgz
+
+# VitePress
+docs/.vitepress/cache/
+docs/.vitepress/.temp/
+public/help/

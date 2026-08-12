@@ -1,0 +1,53 @@
+.m47-style-control {
+  position: relative;
+}
+
+.m47-style-control__toggle::before {
+  color: #333;
+  content: "≡";
+  display: block;
+  font-size: 24px;
+  line-height: 28px;
+  transform: rotate(90deg);
+}
+
+.m47-style-control__list {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+  display: none;
+  min-width: 180px;
+  overflow: hidden;
+  position: absolute;
+  right: 38px;
+  top: 0;
+}
+
+.m47-style-control.is-open .m47-style-control__list {
+  display: block;
+}
+
+.m47-style-control__list button {
+  background: #fff;
+  border: 0;
+  color: #333;
+  cursor: pointer;
+  display: block;
+  font-size: 13px;
+  padding: 8px 12px;
+  text-align: left;
+  width: 100%;
+}
+
+.m47-style-control__list button + button {
+  border-top: 1px solid #ddd;
+}
+
+.m47-style-control__list button:hover,
+.m47-style-control__list button:focus-visible {
+  background: #f2f2f2;
+}
+
+.m47-style-control__list button.active {
+  font-weight: 700;
+}

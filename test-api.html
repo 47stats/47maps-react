@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+  <head>
+    <title>API Test</title>
+  </head>
+
+  <body>
+    <h1>API Configuration Test</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+
+    <script>
+      function testAPI() {
+        console.log("Testing API with proxy...");
+
+        // Test proxy endpoint
+        fetch("/api/stats/v1/catalog/column/class", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            database: "test",
+            version: "test",
+            store: "test",
+            class: "test",
+          }),
+        })
+          .then((response) => {
+            console.log("Response status:", response.status);
+            console.log("Response headers:", response.headers);
+            document.getElementById("result").innerHTML = `
+                    <p>Status: ${response.status}</p>
+                    <p>URL: ${response.url}</p>
+                    <p>Type: ${response.type}</p>
+                `;
+            return response.text();
+          })
+          .then((data) => {
+            console.log("Response data:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("result").innerHTML =
+              `<p>Error: ${error.message}</p>`;
+          });
+      }
+    </script>
+  </body>
+</html>

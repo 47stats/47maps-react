@@ -1,0 +1,38 @@
+[
+  {
+    "name": "都道府県の統計",
+    "description": "人口動態や経済状況などが時系列で確認できるデータです",
+    "icon": "FaChartPie",
+    "database": "47MAPS",
+    "class": "1@",
+    "mapType": "PREF",
+    "maxSelection": 47
+  },
+  {
+    "name": "市区町村の統計",
+    "description": "マクロ的に地域変化が時系列で確認できるデータです",
+    "icon": "FaChartLine",
+    "database": "47MAPS",
+    "class": "1@",
+    "mapType": "CITY",
+    "maxSelection": 1896
+  },
+  {
+    "name": "町丁の統計",
+    "description": "ミクロ的に地域変化が時系列で確認できるデータです",
+    "icon": "FaChartColumn",
+    "database": "47MAPS",
+    "class": "1@",
+    "mapType": "TOWN",
+    "maxSelection": 5000
+  },
+  {
+    "name": "あさひる統計",
+    "description": "楽しいチリビジ社提供の人口を曜日時間帯に推計した人口統計データです",
+    "icon": "FaChartArea",
+    "database": "47MAPS",
+    "class": "1@",
+    "mapType": "ASAHIRU",
+    "maxSelection": 5000
+  }
+]

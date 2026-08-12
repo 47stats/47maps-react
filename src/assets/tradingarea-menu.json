@@ -1,0 +1,30 @@
+[
+  {
+    "name": "足元商圏",
+    "description": "指定地点を中心とした半径400mの商圏です",
+    "icon": "FaCircle",
+    "meterRadius": 400,
+    "minutesRadius": [5, 2, 1]
+  },
+  {
+    "name": "一次商圏",
+    "description": "指定地点を中心とした半径1kmの商圏です",
+    "icon": "FaCircle",
+    "meterRadius": 1000,
+    "minutesRadius": [13, 4, 4]
+  },
+  {
+    "name": "二次商圏",
+    "description": "指定地点を中心とした半径3kmの商圏です",
+    "icon": "FaCircle",
+    "meterRadius": 3000,
+    "minutesRadius": [40, 12, 10]
+  },
+  {
+    "name": "三次商圏",
+    "description": "指定地点を中心とした半径5kmの商圏です",
+    "icon": "FaCircle",
+    "meterRadius": 5000,
+    "minutesRadius": [60, 20, 13]
+  }
+]

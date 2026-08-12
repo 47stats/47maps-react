@@ -1,0 +1,101 @@
+.items {
+  width: 300px;
+  background: #fffffe;
+  box-shadow:
+    0 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
+  border-top: 10px solid #0b5aa2;
+}
+
+.items-head p {
+  padding: 5px 20px;
+  margin: 10px;
+  color: #0b5aa2;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.items-head hr {
+  width: 20%;
+  margin: 0px 30px;
+  border: 1px solid #0b5aa2;
+}
+
+.items-body {
+  padding: 10px;
+  margin: 10px;
+  /*
+  display: grid;
+  grid-gap: 10px;
+  */
+  overflow: auto;
+  height: 300px;
+  padding: 5px;
+}
+
+.areas.items-body-content {
+  padding: 8px;
+  padding-right: 0px;
+  display: grid;
+  /*for Badge*/
+  grid-template-columns: 1fr 10fr 1fr 1fr;
+  /*No Badge
+  grid-template-columns: 1fr 10fr 1fr;
+  */
+  font-size: 13px;
+  grid-gap: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.items-body-content {
+  padding: 8px;
+  padding-right: 0px;
+  display: grid;
+  grid-template-columns: 10fr 1fr;
+  font-size: 13px;
+  grid-gap: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.items-body-content:hover {
+  border-radius: 15px;
+  border: 1px solid #0b5aa2;
+}
+
+.items-body-content svg {
+  align-self: center;
+  font-size: 15px;
+  color: #0b5aa2;
+  font-weight: bold;
+  animation: icon 1.5s infinite forwards;
+}
+
+.items-body::-webkit-scrollbar {
+  width: 4px;
+  cursor: pointer;
+  _background-color: rgba(229, 231, 235, var(--bg-opacity));
+}
+
+.items-body::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+  _background: red;
+}
+
+.items-body::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: #a0aec0;
+  _outline: 1px solid slategrey;
+}
+
+@keyframes icon {
+  0%,
+  100% {
+    transform: translate(0px);
+  }
+  50% {
+    transform: translate(3px);
+  }
+}
