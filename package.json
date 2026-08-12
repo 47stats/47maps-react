@@ -116,5 +116,9 @@
     "vite": "^6.4.3",
     "vitepress": "^2.0.0-alpha.17",
     "vitest": "^4.1.10"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true
   }
 }
