@@ -22,6 +22,7 @@ export type LegendProps = {
 
 export const Legend = (props: LegendProps) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState(true);
   const config = useConfig();
   const {
     legendSchemeType,
@@ -112,22 +113,41 @@ export const Legend = (props: LegendProps) => {
     setOpenModal(false);
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+    setIsVisible(false);
+  };
+
   return (
     <>
-      <div
-        id="legend"
-        className="legend dark:bg-gray-700"
-        style={{ visibility: "visible" }}
-      >
-        <p className="font-bold dark:text-gray-300">{title}</p>
-        <p className="dark:text-gray-300">{subject}</p>
-        {props.legend ? props.legend.map(renderLegend) : null}
-        <hr className="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
-        <Button pill size="xs" onClick={() => setOpenModal(true)}>
-          <HiOutlinePencilAlt className="mr-2 size-4" />
-          編集
-        </Button>
-      </div>
+      {isVisible ? (
+        <div id="legend" className="legend dark:bg-gray-700">
+          <button
+            type="button"
+            className="legend-close"
+            aria-label="凡例を閉じる"
+            onClick={handleClose}
+          >
+            &times;
+          </button>
+          <p className="pr-5 font-bold dark:text-gray-300">{title}</p>
+          <p className="dark:text-gray-300">{subject}</p>
+          {props.legend ? props.legend.map(renderLegend) : null}
+          <hr className="my-2 h-px border-0 bg-gray-200 dark:bg-gray-700"></hr>
+          <Button pill size="xs" onClick={() => setOpenModal(true)}>
+            <HiOutlinePencilAlt className="mr-2 size-4" />
+            編集
+          </Button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          className="legend-toggle dark:bg-gray-700 dark:text-gray-200"
+          onClick={() => setIsVisible(true)}
+        >
+          凡例を表示
+        </button>
+      )}
       {legendSchemeType && legendRampName && legendNumClasses ? (
         <LegendDialog
           show={openModal}
