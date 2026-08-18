@@ -8,7 +8,12 @@ module.exports = {
     "plugin:tailwindcss/recommended",
     "prettier",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "vite.config.js",
+    "vite.config.d.ts",
+  ],
   parser: "@typescript-eslint/parser",
   plugins: ["react-refresh"],
   settings: {
