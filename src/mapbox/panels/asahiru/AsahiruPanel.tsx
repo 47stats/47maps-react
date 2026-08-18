@@ -11,6 +11,7 @@ export type AsahiruPanelProps = {
   onChangeSeries: (value: number) => void;
   onChangeOpacity: (value: number) => void;
   onChangeAuto: (automatic: boolean) => void;
+  onClose: () => void;
 };
 
 export const AsahiruPanel = (props: AsahiruPanelProps) => {
@@ -27,6 +28,14 @@ export const AsahiruPanel = (props: AsahiruPanelProps) => {
   const item = column[colIndex !== -1 ? colIndex : column.length - 1];
   return (
     <div className="control-panel">
+      <button
+        type="button"
+        className="control-panel-close"
+        aria-label="設定パネルを閉じる"
+        onClick={props.onClose}
+      >
+        &times;
+      </button>
       <h1>
         {item.name} ({item.unit})
       </h1>

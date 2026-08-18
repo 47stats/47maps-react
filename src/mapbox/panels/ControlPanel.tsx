@@ -1,5 +1,6 @@
 ﻿import { ColumnInfoType } from "@47stats/api";
 import { SeriesPanel } from "./series/SeriesPanel";
+import { useState } from "react";
 import { AsahiruPanel } from "./asahiru/AsahiruPanel";
 import "./ControlPanel.css";
 
@@ -14,12 +15,22 @@ export type ControlPanelProps = {
 };
 
 export const ControlPanel = (props: ControlPanelProps) => {
+  const [isVisible, setIsVisible] = useState(true);
+
   return (
     <>
-      {props.store == "ASAHIRU" ? (
-        <AsahiruPanel {...props} />
+      {isVisible && props.store == "ASAHIRU" ? (
+        <AsahiruPanel {...props} onClose={() => setIsVisible(false)} />
+      ) : isVisible ? (
+        <SeriesPanel {...props} onClose={() => setIsVisible(false)} />
       ) : (
-        <SeriesPanel {...props} />
+        <button
+          type="button"
+          className="control-panel-toggle"
+          onClick={() => setIsVisible(true)}
+        >
+          設定パネルを表示
+        </button>
       )}
     </>
   );

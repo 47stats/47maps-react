@@ -10,6 +10,7 @@ export type SeriesPanelProps = {
   onChangeSeries: (value: number) => void;
   onChangeOpacity: (value: number) => void;
   onChangeAuto: (automatic: boolean) => void;
+  onClose: () => void;
 };
 
 export const SeriesPanel = (props: SeriesPanelProps) => {
@@ -24,6 +25,14 @@ export const SeriesPanel = (props: SeriesPanelProps) => {
   const item = column[0];
   return (
     <div className="control-panel  dark:bg-gray-700">
+      <button
+        type="button"
+        className="control-panel-close"
+        aria-label="設定パネルを閉じる"
+        onClick={props.onClose}
+      >
+        &times;
+      </button>
       <h1 className="text-cyan-800 dark:text-cyan-400">
         {item.name} ({item.unit})
       </h1>

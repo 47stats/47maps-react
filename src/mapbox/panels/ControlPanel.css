@@ -18,6 +18,45 @@
   top: 30px;
   width: 284px;
 }
+.control-panel-close {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  font-size: 22px;
+  height: 28px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  width: 28px;
+}
+.control-panel-close:hover,
+.control-panel-close:focus-visible {
+  color: #0e7490;
+}
+.control-panel-toggle {
+  background-color: #fff;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.15);
+  color: #374151;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  position: absolute;
+  right: 64px;
+  top: 54px;
+}
+.control-panel-toggle:hover,
+.control-panel-toggle:focus-visible {
+  color: #0e7490;
+}
 .control-panel h1 {
   font-size: 1.1em;
   font-weight: 600;
