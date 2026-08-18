@@ -32,6 +32,18 @@ input[type="text"]:focus.mapboxgl-ctrl-geocoder--input {
 .mapboxgl-ctrl-geocoder .mapboxgl-ctrl-geocoder--pin-right > * {
   top: 5px !important;
 }
+
+@media screen and (max-width: 639px) {
+  .mapboxgl-ctrl-geocoder {
+    width: 90px;
+    min-width: 90px;
+  }
+
+  .mapboxgl-ctrl-geocoder:focus-within {
+    width: min(280px, calc(100vw - 20px));
+    min-width: min(280px, calc(100vw - 20px));
+  }
+}
 /*
 button svg {
     display: inline !important;
