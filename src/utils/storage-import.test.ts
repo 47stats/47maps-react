@@ -160,4 +160,27 @@ describe("importStorageFromJson", () => {
       JSON.stringify(data.choroplethSettings),
     );
   });
+
+  it("storageScopeがある場合はユーザー別のキーに保存する", async () => {
+    const data = createValidData();
+    const body = JSON.stringify(data);
+    const file = {
+      size: new TextEncoder().encode(body).byteLength,
+      text: vi.fn().mockResolvedValue(body),
+    } as unknown as File;
+
+    const result = await importStorageFromJson(file, {}, "user/id");
+
+    expect(result).toEqual({ success: true });
+    expect(setItem).toHaveBeenNthCalledWith(
+      1,
+      "marketarea-items:user%2Fid",
+      JSON.stringify(data.marketareaItems),
+    );
+    expect(setItem).toHaveBeenNthCalledWith(
+      2,
+      "choropleth-settings:user%2Fid",
+      JSON.stringify(data.choroplethSettings),
+    );
+  });
 });

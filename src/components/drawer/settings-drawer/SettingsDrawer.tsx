@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Drawer,
   DarkThemeToggle,
@@ -27,9 +27,11 @@ import {
   RESTART_CHOROPLETH_ONBOARDING_EVENT,
 } from "../../navbar/onboarding";
 import { useConfig } from "../../../contexts/ConfigContext";
+import { ChoroplethContext } from "../../../provider";
 
 export const SettingsDrawer = (props: DrawerPropType) => {
   const config = useConfig();
+  const { storageScope } = useContext(ChoroplethContext);
   const helpUrl = config.helpUrl;
   const handleClose = props.handleClose;
   const isOpen = props.visible;
@@ -48,9 +50,11 @@ export const SettingsDrawer = (props: DrawerPropType) => {
     setUploadError(null);
     setUploadSuccess(false);
 
-    const result = await importStorageFromJson(file, {
-      maxMarketareaItems: config.marketareaMaxItems,
-    });
+    const result = await importStorageFromJson(
+      file,
+      { maxMarketareaItems: config.marketareaMaxItems },
+      storageScope,
+    );
 
     setIsUploading(false);
 
@@ -95,7 +99,7 @@ export const SettingsDrawer = (props: DrawerPropType) => {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <Button
               className="inline-flex items-center"
-              onClick={downloadStorageAsJson}
+              onClick={() => downloadStorageAsJson(storageScope)}
             >
               ダウンロード
               <HiOutlineDownload className="ml-2 size-5" />
@@ -162,9 +166,9 @@ export const SettingsDrawer = (props: DrawerPropType) => {
           <div className="flex items-center gap-2">
             <Checkbox
               id="restore-on-startup"
-              defaultChecked={isRestoreOnStartupEnabled()}
+              defaultChecked={isRestoreOnStartupEnabled(storageScope)}
               onChange={(event) =>
-                setRestoreOnStartupEnabled(event.target.checked)
+                setRestoreOnStartupEnabled(event.target.checked, storageScope)
               }
             />
             <Label

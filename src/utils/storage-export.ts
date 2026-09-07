@@ -1,14 +1,21 @@
 import { StorageExportData } from "./storage-schema";
-
-const MARKETAREA_STORAGE_KEY = "marketarea-items";
-const CHOROPLETH_STORAGE_KEY = "choropleth-settings";
+import {
+  getChoroplethStorageKey,
+  getMarketareaStorageKey,
+} from "./storage-keys";
 
 /**
  * LocalStorageからデータを取得してエクスポート用のオブジェクトを生成
  */
-export const getStorageExportData = (): StorageExportData => {
-  const marketareaItems = localStorage.getItem(MARKETAREA_STORAGE_KEY);
-  const choroplethSettings = localStorage.getItem(CHOROPLETH_STORAGE_KEY);
+export const getStorageExportData = (
+  storageScope?: string,
+): StorageExportData => {
+  const marketareaItems = localStorage.getItem(
+    getMarketareaStorageKey(storageScope),
+  );
+  const choroplethSettings = localStorage.getItem(
+    getChoroplethStorageKey(storageScope),
+  );
 
   return {
     version: "1.0.0",
@@ -34,8 +41,8 @@ const getDateString = (): string => {
 /**
  * データをJSONファイルとしてダウンロード
  */
-export const downloadStorageAsJson = (): void => {
-  const data = getStorageExportData();
+export const downloadStorageAsJson = (storageScope?: string): void => {
+  const data = getStorageExportData(storageScope);
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);

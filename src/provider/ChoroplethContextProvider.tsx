@@ -1,26 +1,12 @@
-﻿import {
-  PropsWithChildren,
-  createContext,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+﻿import { PropsWithChildren, useState, useEffect, useRef } from "react";
 import { ColumnInfoType, JsonObject } from "@47stats/api";
 import { isRestoreOnStartupEnabled } from "../utils";
-
-const STORAGE_KEY = "choropleth-settings";
-
-export interface ColumnPathItem {
-  class: string;
-  name: string;
-}
-
-export interface LegendDataItem {
-  color: string;
-  min: number;
-  max: number;
-  count: number;
-}
+import { getChoroplethStorageKey } from "../utils/storage-keys";
+import {
+  ChoroplethContext,
+  ColumnPathItem,
+  LegendDataItem,
+} from "./ChoroplethContext";
 
 interface ChoroplethStorageData {
   database: string;
@@ -37,58 +23,17 @@ interface ChoroplethStorageData {
   legendData?: LegendDataItem[]; // 凡例の色と値
 }
 
-interface ChoroplethContextData {
-  database: string;
-  version: string;
-  store: string;
-
-  column: ColumnInfoType[];
-  columnPath: ColumnPathItem[]; // 統計選択のパス
-  area: string[];
-  isMapClickSelection: boolean; // マップクリックによる選択かどうかのフラグ
-  popupInfo: JsonObject; // Popup表示用の情報
-  isMarketareaDrawerActive: boolean; // 商圏Drawerがアクティブかどうか
-  maxSelection: number; // エリア選択件数の上限（0=無制限）
-  errorMessage: string | null; // エラーメッセージ（ポップアップ表示用）
-  filterPolygon: string | undefined; // ASAHIRU用: 商圏polygonフィルタ（GeoJSON文字列）
-
-  // 凡例設定
-  legendSchemeType: string;
-  legendRampName: string;
-  legendNumClasses: number;
-  legendData: LegendDataItem[]; // 凡例の色と値
-
-  setDatabase: React.Dispatch<React.SetStateAction<string>>;
-  setVersion: React.Dispatch<React.SetStateAction<string>>;
-  setStore: React.Dispatch<React.SetStateAction<string>>;
-
-  setColumn: React.Dispatch<React.SetStateAction<ColumnInfoType[]>>;
-  setColumnPath: React.Dispatch<React.SetStateAction<ColumnPathItem[]>>;
-  setArea: React.Dispatch<React.SetStateAction<string[]>>;
-  setIsMapClickSelection: React.Dispatch<React.SetStateAction<boolean>>;
-  setPopupInfo: React.Dispatch<React.SetStateAction<JsonObject>>;
-  setIsMarketareaDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setMaxSelection: React.Dispatch<React.SetStateAction<number>>;
-  setErrorMessage: React.Dispatch<React.SetStateAction<string | null>>;
-  setFilterPolygon: React.Dispatch<React.SetStateAction<string | undefined>>;
-
-  setLegendSchemeType: React.Dispatch<React.SetStateAction<string>>;
-  setLegendRampName: React.Dispatch<React.SetStateAction<string>>;
-  setLegendNumClasses: React.Dispatch<React.SetStateAction<number>>;
-  setLegendData: React.Dispatch<React.SetStateAction<LegendDataItem[]>>;
-}
-export const ChoroplethContext = createContext<ChoroplethContextData>(
-  {} as ChoroplethContextData,
-);
-
 /**
  * localStorageから保存済み設定を読み込みます。
  * 復元が無効・未保存・パース失敗の場合は空オブジェクトを返します。
  */
-function loadStoredSettings(): Partial<ChoroplethStorageData> {
+function loadStoredSettings(
+  storageKey: string,
+  storageScope?: string,
+): Partial<ChoroplethStorageData> {
   try {
-    const stored = isRestoreOnStartupEnabled()
-      ? localStorage.getItem(STORAGE_KEY)
+    const stored = isRestoreOnStartupEnabled(storageScope)
+      ? localStorage.getItem(storageKey)
       : null;
     if (stored) {
       return JSON.parse(stored) as ChoroplethStorageData;
@@ -102,9 +47,45 @@ function loadStoredSettings(): Partial<ChoroplethStorageData> {
   return {};
 }
 
-export function ChoroplethContextProvider({ children }: PropsWithChildren) {
+type ChoroplethContextProviderProps = PropsWithChildren<{
+  /**
+   * Isolates persisted settings between consumers, such as authenticated users.
+   * Use a stable, non-personal identifier rather than an email address.
+   */
+  storageScope?: string;
+}>;
+
+export function ChoroplethContextProvider({
+  children,
+  storageScope,
+}: ChoroplethContextProviderProps) {
+  const storageKey = getChoroplethStorageKey(storageScope);
+
+  return (
+    <ScopedChoroplethContextProvider
+      key={storageKey}
+      storageKey={storageKey}
+      storageScope={storageScope}
+    >
+      {children}
+    </ScopedChoroplethContextProvider>
+  );
+}
+
+type ScopedChoroplethContextProviderProps = PropsWithChildren<{
+  storageKey: string;
+  storageScope?: string;
+}>;
+
+function ScopedChoroplethContextProvider({
+  children,
+  storageKey,
+  storageScope,
+}: ScopedChoroplethContextProviderProps) {
   // localStorageからの読み込みはマウント時に1回だけ行い、各stateに分配する
-  const [initial] = useState(loadStoredSettings);
+  const [initial] = useState(() =>
+    loadStoredSettings(storageKey, storageScope),
+  );
 
   const [database, setDatabase] = useState<string>(initial.database || "");
   const [version, setVersion] = useState<string>(initial.version || "");
@@ -181,7 +162,7 @@ export function ChoroplethContextProvider({ children }: PropsWithChildren) {
         legendNumClasses: legendNumClasses || undefined,
         legendData: legendData.length > 0 ? legendData : undefined,
       };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(storageKey, JSON.stringify(data));
     } catch (error) {
       console.error(
         "Failed to save choropleth settings to localStorage:",
@@ -200,11 +181,13 @@ export function ChoroplethContextProvider({ children }: PropsWithChildren) {
     legendRampName,
     legendNumClasses,
     legendData,
+    storageKey,
   ]);
 
   return (
     <ChoroplethContext.Provider
       value={{
+        storageScope,
         database,
         setDatabase,
         version,

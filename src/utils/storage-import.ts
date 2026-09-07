@@ -5,9 +5,10 @@ import {
   STORAGE_JSON_SCHEMA,
   StorageExportData,
 } from "./storage-schema";
-
-const MARKETAREA_STORAGE_KEY = "marketarea-items";
-const CHOROPLETH_STORAGE_KEY = "choropleth-settings";
+import {
+  getChoroplethStorageKey,
+  getMarketareaStorageKey,
+} from "./storage-keys";
 
 export interface StorageImportLimits {
   maxFileSizeBytes?: number;
@@ -47,6 +48,7 @@ export const validateStorageData = (
 export const importStorageFromJson = async (
   file: File,
   limits: StorageImportLimits = {},
+  storageScope?: string,
 ): Promise<{ success: boolean; error?: string }> => {
   const maxFileSizeBytes =
     limits.maxFileSizeBytes ?? MAX_IMPORT_FILE_SIZE_BYTES;
@@ -73,11 +75,11 @@ export const importStorageFromJson = async (
     }
 
     localStorage.setItem(
-      MARKETAREA_STORAGE_KEY,
+      getMarketareaStorageKey(storageScope),
       JSON.stringify(data.marketareaItems),
     );
     localStorage.setItem(
-      CHOROPLETH_STORAGE_KEY,
+      getChoroplethStorageKey(storageScope),
       JSON.stringify(data.choroplethSettings),
     );
 

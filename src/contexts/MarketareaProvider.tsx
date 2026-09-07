@@ -6,14 +6,45 @@ import {
   MarketareaItem,
 } from "./MarketareaContext";
 import { isRestoreOnStartupEnabled } from "../utils";
+import { getMarketareaStorageKey } from "../utils/storage-keys";
 
 interface MarketareaProviderProps {
   children: ReactNode;
+  /**
+   * Isolates persisted items between consumers, such as authenticated users.
+   * Use a stable, non-personal identifier rather than an email address.
+   */
+  storageScope?: string;
 }
 
-const STORAGE_KEY = "marketarea-items";
+export const MarketareaProvider = ({
+  children,
+  storageScope,
+}: MarketareaProviderProps) => {
+  const storageKey = getMarketareaStorageKey(storageScope);
 
-export const MarketareaProvider = ({ children }: MarketareaProviderProps) => {
+  return (
+    <ScopedMarketareaProvider
+      key={storageKey}
+      storageKey={storageKey}
+      storageScope={storageScope}
+    >
+      {children}
+    </ScopedMarketareaProvider>
+  );
+};
+
+interface ScopedMarketareaProviderProps {
+  children: ReactNode;
+  storageKey: string;
+  storageScope?: string;
+}
+
+const ScopedMarketareaProvider = ({
+  children,
+  storageKey,
+  storageScope,
+}: ScopedMarketareaProviderProps) => {
   const [tradingSettings, setTradingSettings] = useState<TradingAreaSettings>({
     radius: 500,
     color: "#ff0000",
@@ -32,8 +63,8 @@ export const MarketareaProvider = ({ children }: MarketareaProviderProps) => {
   // localStorageから初期データを読み込み
   const [items, setItems] = useState<MarketareaItem[]>(() => {
     try {
-      const stored = isRestoreOnStartupEnabled()
-        ? localStorage.getItem(STORAGE_KEY)
+      const stored = isRestoreOnStartupEnabled(storageScope)
+        ? localStorage.getItem(storageKey)
         : null;
       if (stored) {
         return JSON.parse(stored);
@@ -84,11 +115,11 @@ export const MarketareaProvider = ({ children }: MarketareaProviderProps) => {
   // itemsが変更されたらlocalStorageに保存
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      localStorage.setItem(storageKey, JSON.stringify(items));
     } catch (error) {
       console.error("Failed to save marketarea items to localStorage:", error);
     }
-  }, [items]);
+  }, [items, storageKey]);
 
   return (
     <MarketareaContext.Provider
