@@ -66,6 +66,13 @@ describe("validateStorageData", () => {
     expect(validateStorageData(createValidData())).toBe(true);
   });
 
+  it("町丁・あさひる統計の最大選択数5000を受理する", () => {
+    const data = createValidData();
+    data.choroplethSettings.maxSelection = 5000;
+
+    expect(validateStorageData(data)).toBe(true);
+  });
+
   it("設定された商圏件数の上限を適用する", () => {
     const data = createValidData();
     data.marketareaItems.push({

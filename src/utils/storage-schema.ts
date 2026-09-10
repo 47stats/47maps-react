@@ -7,7 +7,9 @@ export const STORAGE_SCHEMA_VERSION = "1.0.0";
 export const MAX_IMPORT_FILE_SIZE_BYTES = 1024 * 1024;
 export const DEFAULT_MAX_MARKETAREA_ITEMS = 20;
 export const ABSOLUTE_MAX_MARKETAREA_ITEMS = 100;
-export const MAX_AREA_ITEMS = 1000;
+// maptype-menu.json で定義している町丁・あさひる統計の最大選択数。
+// エクスポートされた設定値と、実際に選択され得る area の件数を受理できるようにする。
+export const MAX_AREA_ITEMS = 5000;
 export const MAX_COLUMN_ITEMS = 300;
 export const MAX_COLUMN_PATH_ITEMS = 20;
 export const MAX_LEGEND_ITEMS = 12;
